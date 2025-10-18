@@ -1,0 +1,10 @@
+C:\Users\hecto\Documents\tpv-comandas-almacen\tpv-api\src\main\java\com\hector\tpv\tpvapi\dto\NuevaComandaRequest.java
+C:\Users\hecto\Documents\tpv-comandas-almacen\tpv-api\src\main\java\com\hector\tpv\tpvapi\repository\ComandaLineaRepository.java
+C:\Users\hecto\Documents\tpv-comandas-almacen\tpv-api\src\main\java\com\hector\tpv\tpvapi\model\Producto.java
+C:\Users\hecto\Documents\tpv-comandas-almacen\tpv-api\src\main\java\com\hector\tpv\tpvapi\repository\ComandaRepository.java
+C:\Users\hecto\Documents\tpv-comandas-almacen\tpv-api\src\main\java\com\hector\tpv\tpvapi\repository\ProductoRepository.java
+C:\Users\hecto\Documents\tpv-comandas-almacen\tpv-api\src\main\java\com\hector\tpv\tpvapi\TpvApiApplication.java
+C:\Users\hecto\Documents\tpv-comandas-almacen\tpv-api\src\main\java\com\hector\tpv\tpvapi\controller\ComandaController.java
+C:\Users\hecto\Documents\tpv-comandas-almacen\tpv-api\src\main\java\com\hector\tpv\tpvapi\model\Comanda.java
+C:\Users\hecto\Documents\tpv-comandas-almacen\tpv-api\src\main\java\com\hector\tpv\tpvapi\controller\ProductoController.java
+C:\Users\hecto\Documents\tpv-comandas-almacen\tpv-api\src\main\java\com\hector\tpv\tpvapi\model\ComandaLinea.java

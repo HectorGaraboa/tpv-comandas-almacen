@@ -1,0 +1,13 @@
+com\hector\tpv\tpvapi\model\Producto$Destino.class
+com\hector\tpv\tpvapi\dto\NuevaComandaRequest.class
+com\hector\tpv\tpvapi\model\Comanda.class
+com\hector\tpv\tpvapi\controller\ProductoController.class
+com\hector\tpv\tpvapi\TpvApiApplication.class
+com\hector\tpv\tpvapi\model\Producto.class
+com\hector\tpv\tpvapi\model\ComandaLinea.class
+com\hector\tpv\tpvapi\repository\ComandaLineaRepository.class
+com\hector\tpv\tpvapi\repository\ComandaRepository.class
+com\hector\tpv\tpvapi\model\Comanda$Estado.class
+com\hector\tpv\tpvapi\dto\NuevaComandaRequest$Linea.class
+com\hector\tpv\tpvapi\controller\ComandaController.class
+com\hector\tpv\tpvapi\repository\ProductoRepository.class
