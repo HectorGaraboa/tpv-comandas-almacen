@@ -63,8 +63,29 @@ public class VentanaPrincipal extends JFrame {
         pnlAbierto.setPreferredSize(new Dimension(380, 250));
         pnlCarrito.setPreferredSize(new Dimension(380, 280));
         contDer.add(pnlAbierto);
+
+        var separator = new JSeparator(SwingConstants.HORIZONTAL);
+        separator.putClientProperty("JComponent.sizeVariant", "small");
         contDer.add(Box.createVerticalStrut(8));
+        contDer.add(separator);
+        contDer.add(Box.createVerticalStrut(8));
+
         contDer.add(pnlCarrito);
+
+        tablaCarrito.setRowHeight(28);
+        tablaAbierto.setRowHeight(28);
+        tablaCarrito.setFillsViewportHeight(true);
+        tablaAbierto.setFillsViewportHeight(true);
+
+        int pad = 10;
+        javax.swing.border.Border margin = javax.swing.BorderFactory.createEmptyBorder(pad, pad, pad, pad);
+        pnlIzq.setBorder(margin);
+        pnlCentro.setBorder(margin);
+        pnlAbierto.setBorder(margin);
+        pnlCarrito.setBorder(margin);
+
+        lblTotal.setFont(lblTotal.getFont().deriveFont(java.awt.Font.BOLD, 14f));
+        lblTotalAbierto.setFont(lblTotalAbierto.getFont().deriveFont(java.awt.Font.BOLD, 14f));
 
         var pnlBotones = new JPanel(new FlowLayout(FlowLayout.RIGHT));
         pnlBotones.add(lblTotal);
@@ -79,6 +100,7 @@ public class VentanaPrincipal extends JFrame {
 
         listaMesas.setFixedCellWidth(140);
         listaProductos.setFixedCellWidth(300);
+
         tablaAbierto.setFillsViewportHeight(true);
         tablaCarrito.setFillsViewportHeight(true);
 
