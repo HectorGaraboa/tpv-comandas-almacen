@@ -9,13 +9,23 @@ import jakarta.persistence.*;
 @Entity
 @Table(name = "zona")
 public class Zona {
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable=false)
+    @Column(nullable = false)
     private String nombre;
 
-    public Long getId() { return id; }
-    public String getNombre() { return nombre; }
-    public void setNombre(String v) { this.nombre = v; }
+    public Long getId() {
+        return id;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String v) {
+        this.nombre = v;
+    }
 }

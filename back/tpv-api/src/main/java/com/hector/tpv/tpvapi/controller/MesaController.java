@@ -1,6 +1,7 @@
 package com.hector.tpv.tpvapi.controller;
 
 import com.hector.tpv.tpvapi.dto.MesaDTO;
+import com.hector.tpv.tpvapi.repository.ComandaLineaAggDao;
 
 import com.hector.tpv.tpvapi.repository.MesaRepository;
 
@@ -17,16 +18,27 @@ import java.util.List;
 public class MesaController {
 
     private final MesaRepository repo;
+    private final ComandaLineaAggDao aggDao;
 
-    public MesaController(MesaRepository repo) {
+    public MesaController(MesaRepository repo, ComandaLineaAggDao aggDao) {
+        this.aggDao = aggDao;
         this.repo = repo;
     }
 
     @GetMapping
     public List<MesaDTO> listar() {
         return repo.findAll().stream()
-                .map(m -> new MesaDTO(m.getId(), m.getCodigo(),
-                m.getZona() != null ? m.getZona().getId() : null))
-                .toList();
+                .map(m -> {
+                    Long zonaId = m.getZona() != null ? m.getZona().getId() : null;
+
+                    boolean ocupada = !aggDao.aggByMesa(m.getId()).isEmpty();
+
+                    return new MesaDTO(
+                            m.getId(),
+                            m.getCodigo(),
+                            zonaId,
+                            ocupada
+                    );
+                }).toList();
     }
 }
