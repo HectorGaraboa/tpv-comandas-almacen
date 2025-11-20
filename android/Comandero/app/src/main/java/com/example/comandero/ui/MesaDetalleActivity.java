@@ -1,10 +1,15 @@
-package com.example.comandero;
-
-import androidx.appcompat.app.AppCompatActivity;
+package com.example.comandero.ui;
 
 import android.os.Bundle;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.comandero.R;
+import com.example.comandero.api.ApiService;
+import com.example.comandero.api.RetrofitClient;
+import com.example.comandero.model.MesaAbierta;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -36,33 +41,26 @@ public class MesaDetalleActivity extends AppCompatActivity {
         }
 
         txtMesaCodigo.setText("Mesa: " + mesaCodigo);
-
         cargarMesaAbierta();
     }
 
     private void cargarMesaAbierta() {
         ApiService apiService = RetrofitClient.getClient().create(ApiService.class);
-
-        Call<MesaAbiertaDTO> call = apiService.obtenerMesaAbierta(mesaId);
-        call.enqueue(new Callback<MesaAbiertaDTO>() {
+        Call<MesaAbierta> call = apiService.obtenerMesaAbierta(mesaId);
+        call.enqueue(new Callback<MesaAbierta>() {
             @Override
-            public void onResponse(Call<MesaAbiertaDTO> call, Response<MesaAbiertaDTO> response) {
+            public void onResponse(Call<MesaAbierta> call, Response<MesaAbierta> response) {
                 if (response.isSuccessful() && response.body() != null) {
-                    MesaAbiertaDTO dto = response.body();
+                    MesaAbierta dto = response.body();
                     txtTotal.setText(String.format("Total: %.2f €", dto.getTotal()));
-                    // Más adelante aquí pondremos líneas de comanda
                 } else {
-                    Toast.makeText(MesaDetalleActivity.this,
-                            "Error HTTP: " + response.code(),
-                            Toast.LENGTH_LONG).show();
+                    Toast.makeText(MesaDetalleActivity.this, "Error HTTP: " + response.code(), Toast.LENGTH_LONG).show();
                 }
             }
 
             @Override
-            public void onFailure(Call<MesaAbiertaDTO> call, Throwable t) {
-                Toast.makeText(MesaDetalleActivity.this,
-                        "Fallo: " + t.getMessage(),
-                        Toast.LENGTH_LONG).show();
+            public void onFailure(Call<MesaAbierta> call, Throwable t) {
+                Toast.makeText(MesaDetalleActivity.this, "Fallo: " + t.getMessage(), Toast.LENGTH_LONG).show();
                 t.printStackTrace();
             }
         });

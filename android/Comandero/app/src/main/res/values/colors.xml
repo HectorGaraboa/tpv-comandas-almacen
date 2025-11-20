@@ -2,4 +2,9 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="mesa_libre_bg">#F5F5F5</color>
+    <color name="mesa_ocupada_bg">#3366CC</color>
+    <color name="mesa_text_contraste">#FFFFFF</color>
+    <color name="mesa_text_normal">#333333</color>
+
 </resources>

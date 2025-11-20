@@ -1,4 +1,4 @@
-package com.example.comandero;
+package com.example.comandero.ui;
 
 
 
@@ -7,6 +7,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+
+import com.example.comandero.R;
 
 public class MainActivity extends AppCompatActivity {
 

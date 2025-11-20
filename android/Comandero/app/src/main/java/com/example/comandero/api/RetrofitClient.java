@@ -1,4 +1,4 @@
-package com.example.comandero;
+package com.example.comandero.api;
 
 
 import retrofit2.Retrofit;
