@@ -1,11 +1,12 @@
 package com.hector.tpv.tpv.desktop;
 
 import com.formdev.flatlaf.FlatDarkLaf;
+import com.hector.tpv.tpv.desktop.ui.VentanaInicial;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
-import com.hector.tpv.tpv.desktop.ui.VentanaPrincipal;
 
 public class Main {
+
     public static void main(String[] args) {
         try {
             FlatDarkLaf.setup();
@@ -19,6 +20,6 @@ public class Main {
         } catch (Exception e) {
             System.err.println("No se pudo aplicar FlatLaf: " + e.getMessage());
         }
-        SwingUtilities.invokeLater(() -> new VentanaPrincipal().setVisible(true));
+        SwingUtilities.invokeLater(() -> new VentanaInicial().setVisible(true));
     }
 }

@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package com.hector.tpv.tpv.desktop.model;
 
 public class Mesa {
@@ -9,6 +5,7 @@ public class Mesa {
     private Long id;
     private String codigo;
     private Long zonaId;
+    private boolean ocupada;
 
     public Long getId() {
         return id;
@@ -32,6 +29,14 @@ public class Mesa {
 
     public void setZonaId(Long v) {
         zonaId = v;
+    }
+
+    public boolean isOcupada() {
+        return ocupada;
+    }
+
+    public void setOcupada(boolean v) {
+        ocupada = v;
     }
 
     @Override

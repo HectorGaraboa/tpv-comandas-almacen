@@ -8,6 +8,7 @@ public class MesaAbierta {
     private String codigoMesa;
     private double total;
     private List<MesaAbiertaItem> items;
+    private Long comandaId;
 
     public Long getMesaId() {
         return mesaId;
@@ -39,5 +40,13 @@ public class MesaAbierta {
 
     public void setItems(List<MesaAbiertaItem> v) {
         items = v;
+    }
+
+    public Long getComandaId() {
+        return comandaId;
+    }
+
+    public void setComandaId(Long comandaId) {
+        this.comandaId = comandaId;
     }
 }
