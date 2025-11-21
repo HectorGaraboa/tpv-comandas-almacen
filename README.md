@@ -181,6 +181,53 @@ BASE_URL = "http://192.168.X.XX:8080/";
   - WorkManager
 
 
+# Despliegue con Docker (Backend + Base de datos)
+
+- MySQL 8 con la base de datos inicial (schema.sql + seed.sql)
+- API REST (Spring Boot)
+
+## Requisitos previos
+- Docker Desktop instalado y en ejecución.
+- Carpeta del proyecto clonada.
+
+## Pasos de despliegue
+
+### 1. Clonar el repositorio
+```bash
+git clone <URL_DEL_REPOSITORIO>
+cd tpv-comandas-almacen
+```
+
+### 2. Comprobar Docker
+Docker Desktop está en ejecución.
+
+### 3. Levantar la base de datos y la API
+```bash
+docker compose up -d --build
+```
+
+### 4. Verificar contenedores
+```bash
+docker ps
+```
+Debe aparecer:
+- tpv-mysql → Up
+- tpv-api → Up
+
+### 5. Comprobar la API
+Abrir en navegador:
+```
+http://localhost:8080/api/mesas
+http://localhost:8080/api/productos
+```
+
+## Notas
+- schema.sql y seed.sql se ejecutan solo la primera vez que se crea el volumen de la base de datos.
+- Para reiniciar completamente la BD:
+```bash
+docker compose down -v
+docker compose up -d --build
+```
 
 ---
 
