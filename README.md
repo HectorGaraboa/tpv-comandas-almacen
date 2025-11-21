@@ -189,8 +189,8 @@ BASE_URL = "http://192.168.X.XX:8080/";
 | Módulo | Estado | Descripción |
 |--------|---------|-------------|
 | **Backend (tpv-api)** | 🟢 Operativo | API REST funcional |
-| **TPV de Escritorio** | 🟢 Funcional | Mesas, productos, envío, cobro |
-| **Android (Comandero)** | 🟢 Funcional | Flujo completo |
+| **TPV de Escritorio** | 🟢 Operativo | Mesas, productos, envío, cobro |
+| **Android (Comandero)** | 🟢 Operativo | Flujo completo |
 | **Modo Almacén** | ⚪ Pendiente | Implementación planificada para siguientes fases |
 
 ---
