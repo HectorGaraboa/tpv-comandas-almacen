@@ -28,11 +28,11 @@ public class StockService {
     private final InsumoRepository insumoRepo;
 
     public StockService(ComandaLineaRepository lineaRepo,
-                        RecetaRepository recetaRepo,
-                        RecetaInsumoRepository recetaInsumoRepo,
-                        ProductoInsumoRepository productoInsumoRepo,
-                        StockMovimientoRepository stockRepo,
-                        InsumoRepository insumoRepo) {
+            RecetaRepository recetaRepo,
+            RecetaInsumoRepository recetaInsumoRepo,
+            ProductoInsumoRepository productoInsumoRepo,
+            StockMovimientoRepository stockRepo,
+            InsumoRepository insumoRepo) {
         this.lineaRepo = lineaRepo;
         this.recetaRepo = recetaRepo;
         this.recetaInsumoRepo = recetaInsumoRepo;
@@ -68,10 +68,10 @@ public class StockService {
     }
 
     private void descontarInsumo(Long insumoId,
-                                 BigDecimal cantidad,
-                                 Long comandaId,
-                                 Long lineaId,
-                                 String motivo) {
+            BigDecimal cantidad,
+            Long comandaId,
+            Long lineaId,
+            String motivo) {
         Insumo ins = insumoRepo.findById(insumoId).orElseThrow();
         ins.setStockActualBase(ins.getStockActualBase().subtract(cantidad));
         insumoRepo.save(ins);
