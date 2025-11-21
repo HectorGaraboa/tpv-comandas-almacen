@@ -17,34 +17,50 @@ El sistema se compone de tres módulos principales:
 ## Estructura del repositorio
 ```
 tpv-comandas-almacen/
+│
+├── bd/
+│   ├── schema.sql           ← estructura completa de la base de datos
+│   ├── seed.sql             ← datos iniciales de prueba
+│   └── Dump20251120.sql     ← volcado completo usado durante el desarrollo
+│
 ├── back/
-│   ├── bd/
-│   │   ├── schema.sql     ← estructura completa de la base de datos
-│   │   └── seed.sql       ← datos iniciales de prueba
-│   └── tpv-api/           ← backend Spring Boot (API REST)
-│       ├── src/main/java/
-│       │   ├── controller/    ← controladores REST
-│       │   ├── repository/    ← repositorios y DAO personalizados
-│       │   ├── model/         ← entidades JPA
-│       │   └── dto/           ← DTOs de respuesta
+│   └── tpv-api/             ← backend Spring Boot (API REST)
+│       ├── src/main/java/com/hector/tpv/tpvapi/
+│       │   ├── controller/   ← controladores REST
+│       │   ├── repository/   ← repositorios y consultas agregadas
+│       │   ├── model/        ← entidades JPA
+│       │   ├── service/      ← lógica de negocio (tickets, comandas…)
+│       │   └── dto/          ← objetos de transferencia de datos
+│       ├── src/main/resources/
+│       │   └── reports/      ← plantillas JasperReports (tickets, cierres…)
 │       └── pom.xml
 │
 ├── desktop/
-│   └── tpv-desktop/       ← aplicación de escritorio (Swing)
-│       ├── src/main/java/
-│       │   ├── api/       ← cliente HTTP que consume la API REST
-│       │   ├── model/     ← clases de datos (Producto, Mesa, Comanda…)
-│       │   └── ui/        ← interfaz gráfica (VentanaPrincipal, tablas…)
+│   └── tpv-desktop/         ← aplicación de escritorio (Swing)
+│       ├── src/main/java/com/hector/tpv/tpv/desktop/
+│       │   ├── api/          ← cliente HTTP que consume la API REST
+│       │   ├── model/        ← clases de datos (Producto, Mesa, Comanda…)
+│       │   └── ui/           ← interfaz gráfica (TPV, Mesas, Productos…)
+│       ├── src/main/resources/
+│       │   └── application.properties
 │       └── pom.xml
 │
-├── android/               ← módulo móvil (pendiente de desarrollo)
+├── android/
+│   └── Comandero/           ← aplicación móvil Android (comandero)
+│       ├── app/src/main/java/com/example/comandero/
+│       │   ├── api/          ← Retrofit + cliente API
+│       │   ├── model/        ← modelos Android (Mesa, Producto, Categoría…)
+│       │   ├── ui/           ← Activities + adapters
+│       │   └── offline/      ← WorkManager (modo offline y reintentos)
+│       └── app/src/main/res/ ← layouts XML, drawables, menus…
 │
 ├── docs/
-│   ├── erd.png            ← diagrama EER de la base de datos
-│   └── erd.mwb            ← modelo original MySQL Workbench
+│   ├── erd.png ← diagrama EER de la base de datos
+│   └── erd.mwb ← modelo original MySQL Workbench
 │
 ├── LICENSE
 └── README.md
+
 
 ```
 
@@ -77,59 +93,94 @@ SELECT * FROM insumo;
 ```
 ---
 
-## Ejecución del proyecto
+##  Ejecución del proyecto
 
-### 1. Backend (tpv-api)
-Requisitos:
-- Java 17 o superior  
-- Maven 3.8+  
+## 1. Backend (API REST)
 
-Configurar `application.properties`:
+### Requisitos
+- Java 17+
+- Maven
 
-```properties
-spring.datasource.url=jdbc:mysql://localhost:3306/tpv_tfc?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC&characterEncoding=utf8
-spring.datasource.username=tu_usuario
-spring.datasource.password=tu_contraseña
+### Configuración (`application.properties`)
+```
+spring.datasource.url=jdbc:mysql://localhost:3306/tpv_tfc
+spring.datasource.username=usuario
+spring.datasource.password=contraseña
 spring.jpa.hibernate.ddl-auto=none
-spring.jpa.show-sql=true
 ```
 
-Ejecutar:
-```bash
+### Ejecutar
+```
 cd back/tpv-api
 mvn spring-boot:run
 ```
 
-Endpoints principales disponibles:
-- `GET /api/mesas`
-- `GET /api/mesas/{id}/abierto` → consulta agregada de productos abiertos
-- `GET /api/productos`
-- `POST /api/comandas`
+### Endpoints principales
+```
+GET    /api/mesas
+GET    /api/mesas/{id}/abierto
+GET    /api/productos
+GET    /api/categorias
+POST   /api/comandas
+POST   /api/mesas/{id}/cobrar
+```
 
 ---
 
-### 2. Aplicación de escritorio (tpv-desktop)
-Requisitos:
-- Java 17 o superior  
+## 2. TPV Escritorio (Swing)
+
+### Requisitos
+- Java 17+
 - Maven
 
-Configurar `application.properties`:
+### Configurar `api.baseUrl`
 ```
 api.baseUrl=http://localhost:8080
 ```
 
-Ejecutar:
-```bash
+### Ejecutar
+```
 cd desktop/tpv-desktop
 mvn clean compile exec:java -Dexec.mainClass="com.hector.tpv.tpv.desktop.Main"
 ```
 
-#### Funcionalidades implementadas:
-- Visualización de **mesas reales** desde la BD.  
-- Visualización de **productos disponibles** desde la API.  
-- Consulta de **comandas abiertas** por mesa (`/api/mesas/{id}/abierto`).  
-- Envío de **nuevas comandas** a través del backend (`/api/comandas`).  
-- Cálculo de totales y visualización del estado actual de cada mesa.
+### Funcionalidades
+- Mesas en tiempo real.
+- Productos por categorías.
+- Carrito editable.
+- Enviar comanda.
+- Cobro y cierre.
+
+---
+
+## 3. Aplicación Android (Comandero)
+
+### Requisitos
+- Android Studio
+- Móvil o emulador
+
+### Configurar API
+En `ApiService`:
+```
+BASE_URL = "http://192.168.X.XX:8080/";
+```
+
+### Ejecutar
+1. Abrir `android/Comandero/`
+2. Sincronizar Gradle
+3. Ejecutar en emulador/móvil
+
+### Funcionalidades
+- Mesas y productos en tiempo real.
+- Carrito con modificar/eliminar.
+- Resumen de comanda.
+- Envío al backend.
+- Modo offline:
+  - Cola de envíos
+  - Reintentos
+  - WorkManager
+
+
 
 ---
 
@@ -137,9 +188,9 @@ mvn clean compile exec:java -Dexec.mainClass="com.hector.tpv.tpv.desktop.Main"
 
 | Módulo | Estado | Descripción |
 |--------|---------|-------------|
-| **Backend (tpv-api)** | 🟢 Operativo | Endpoints funcionales con persistencia real y consultas agregadas |
-| **TPV de Escritorio** | 🟢 Funcional | Interfaz Swing conectada al backend con envío de comandas |
-| **Android (Comandero)** | ⚪ Pendiente | Previsto para siguiente iteración |
-| **Modo Almacén / Escandallos** | ⚪ Pendiente | Implementación planificada para siguientes fases |
+| **Backend (tpv-api)** | 🟢 Operativo | API REST funcional |
+| **TPV de Escritorio** | 🟢 Funcional | Mesas, productos, envío, cobro |
+| **Android (Comandero)** | 🟢 Funcional | Flujo completo |
+| **Modo Almacén** | ⚪ Pendiente | Implementación planificada para siguientes fases |
 
 ---
