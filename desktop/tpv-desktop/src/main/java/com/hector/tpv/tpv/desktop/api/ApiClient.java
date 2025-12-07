@@ -5,11 +5,13 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.hector.tpv.tpv.desktop.model.Categoria;
+import com.hector.tpv.tpv.desktop.model.CierreTurno;
 import com.hector.tpv.tpv.desktop.model.ComandaRequest;
 import com.hector.tpv.tpv.desktop.model.Mesa;
 import com.hector.tpv.tpv.desktop.model.MesaAbierta;
 import com.hector.tpv.tpv.desktop.model.Producto;
 import com.hector.tpv.tpv.desktop.model.Ticket;
+import com.hector.tpv.tpv.desktop.model.UsuarioSesion;
 
 import java.io.IOException;
 import java.net.URI;
@@ -18,7 +20,11 @@ import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.Properties;
 
@@ -131,7 +137,7 @@ public class ApiClient {
 
     public Ticket cobrarMesa(Long mesaId, String metodoPago) throws IOException, InterruptedException {
         String url = baseUrl + "/api/mesas/" + mesaId + "/cobrar";
-        String body = mapper.writeValueAsString(java.util.Map.of("metodoPago", metodoPago));
+        String body = mapper.writeValueAsString(Map.of("metodoPago", metodoPago));
         HttpRequest req = HttpRequest.newBuilder(URI.create(url))
                 .header("Content-Type", "application/json")
                 .POST(HttpRequest.BodyPublishers.ofString(body, StandardCharsets.UTF_8))
@@ -143,17 +149,17 @@ public class ApiClient {
         return mapper.readValue(resp.body(), Ticket.class);
     }
 
-    public java.nio.file.Path descargarTicketPdf(Long ticketId) throws IOException, InterruptedException {
+    public Path descargarTicketPdf(Long ticketId) throws IOException, InterruptedException {
         String url = baseUrl + "/api/tickets/" + ticketId + "/pdf";
 
-        java.net.http.HttpRequest req = java.net.http.HttpRequest
-                .newBuilder(java.net.URI.create(url))
+        HttpRequest req = HttpRequest
+                .newBuilder(URI.create(url))
                 .GET()
                 .build();
 
-        java.net.http.HttpResponse<byte[]> resp = http.send(
+        HttpResponse<byte[]> resp = http.send(
                 req,
-                java.net.http.HttpResponse.BodyHandlers.ofByteArray()
+                HttpResponse.BodyHandlers.ofByteArray()
         );
 
         if (resp.statusCode() < 200 || resp.statusCode() >= 300) {
@@ -161,16 +167,115 @@ public class ApiClient {
         }
 
         String home = System.getProperty("user.home");
-        java.nio.file.Path escritorio = java.nio.file.Paths.get(home, "Desktop");
-        java.nio.file.Path carpeta = escritorio.resolve("TPV_Tickets");
-        java.nio.file.Files.createDirectories(carpeta);
+        Path escritorio = Paths.get(home, "Desktop");
+        Path carpeta = escritorio.resolve("TPV_Tickets");
+        Files.createDirectories(carpeta);
 
         String nombre = "ticket_" + ticketId + ".pdf";
-        java.nio.file.Path destino = carpeta.resolve(nombre);
+        Path destino = carpeta.resolve(nombre);
 
-        java.nio.file.Files.write(destino, resp.body());
+        Files.write(destino, resp.body());
 
         return destino;
+    }
+
+    public CierreTurno cerrarTurno() throws IOException, InterruptedException {
+        String url = baseUrl + "/api/cierres/turno";
+
+        HttpRequest req = HttpRequest.newBuilder(URI.create(url))
+                .POST(HttpRequest.BodyPublishers.noBody())
+                .build();
+
+        HttpResponse<String> resp = http.send(req, HttpResponse.BodyHandlers.ofString());
+
+        if (resp.statusCode() == 409) {
+            throw new IllegalStateException("No hay comandas cobradas para cerrar");
+        }
+
+        if (resp.statusCode() < 200 || resp.statusCode() >= 300) {
+            throw new IOException("HTTP " + resp.statusCode() + " => " + resp.body());
+        }
+
+        return mapper.readValue(resp.body(), CierreTurno.class);
+    }
+
+    public Path descargarCierreTurnoPdf(Long cierreId) throws IOException, InterruptedException {
+        String url = baseUrl + "/api/cierres/" + cierreId + "/pdf";
+
+        HttpRequest req = HttpRequest
+                .newBuilder(URI.create(url))
+                .GET()
+                .build();
+
+        HttpResponse<byte[]> resp = http.send(
+                req,
+                HttpResponse.BodyHandlers.ofByteArray()
+        );
+
+        if (resp.statusCode() < 200 || resp.statusCode() >= 300) {
+            throw new IOException("HTTP " + resp.statusCode() + " => " + new String(resp.body()));
+        }
+
+        String home = System.getProperty("user.home");
+        Path escritorio = Paths.get(home, "Desktop");
+        Path carpeta = escritorio.resolve("TPV_Cierres");
+        Files.createDirectories(carpeta);
+
+        String nombre = "cierre_" + cierreId + ".pdf";
+        Path destino = carpeta.resolve(nombre);
+
+        Files.write(destino, resp.body());
+
+        return destino;
+    }
+
+    private static class LoginPayload {
+
+        private String usuario;
+        private String password;
+
+        public String getUsuario() {
+            return usuario;
+        }
+
+        public void setUsuario(String v) {
+            usuario = v;
+        }
+
+        public String getPassword() {
+            return password;
+        }
+
+        public void setPassword(String v) {
+            password = v;
+        }
+    }
+
+    public UsuarioSesion login(String usuario, String password) throws IOException, InterruptedException {
+        String url = baseUrl + "/api/auth/login";
+
+        LoginPayload payload = new LoginPayload();
+        payload.setUsuario(usuario);
+        payload.setPassword(password);
+
+        String body = mapper.writeValueAsString(payload);
+
+        HttpRequest req = HttpRequest.newBuilder(URI.create(url))
+                .header("Content-Type", "application/json")
+                .POST(HttpRequest.BodyPublishers.ofString(body))
+                .build();
+
+        HttpResponse<String> resp = http.send(req, HttpResponse.BodyHandlers.ofString());
+
+        if (resp.statusCode() == 401 || resp.statusCode() == 403) {
+            throw new IOException("Credenciales inválidas");
+        }
+
+        if (resp.statusCode() < 200 || resp.statusCode() >= 300) {
+            throw new IOException("HTTP " + resp.statusCode() + " => " + resp.body());
+        }
+
+        return mapper.readValue(resp.body(), UsuarioSesion.class);
     }
 
 }

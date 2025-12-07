@@ -1,0 +1,286 @@
+<!-- Created with Jaspersoft Studio version 7.0.3.final using JasperReports Library version 7.0.3-41034ca841d452f3305ba55b9042260aaa1ab5dd  -->
+<jasperReport name="Ticket" language="java" columnCount="1" pageWidth="250" pageHeight="600" columnWidth="240" leftMargin="5" rightMargin="5" topMargin="5" bottomMargin="5" uuid="14a52ef0-ceb3-42c9-8cf5-b73f6a99fc06">
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="TPV_BD"/>
+	<style name="Table_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<leftPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+			<rightPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="Table_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<leftPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+			<rightPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="Table_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<leftPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+			<rightPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<dataset name="ComandasCierre" uuid="d4a30db7-5dcc-4655-8bfa-9f4d4c57ab52">
+		<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+		<property name="com.jaspersoft.studio.data.defaultdataadapter" value="TPV_BD"/>
+		<parameter name="CIERRE_ID" class="java.lang.Long"/>
+		<query language="SQL"><![CDATA[SELECT 
+    t.id         AS ticket_id,
+    t.creado_at  AS fecha,
+    t.total      AS importe,
+    t.metodo_pago
+FROM ticket t
+JOIN cierre_turno ct 
+      ON ct.id = $P{CIERRE_ID}
+WHERE t.creado_at >= ct.desde
+  AND t.creado_at <= ct.hasta
+ORDER BY t.creado_at
+]]></query>
+		<field name="ticket_id" class="java.lang.Long">
+			<property name="com.jaspersoft.studio.field.name" value="id"/>
+			<property name="com.jaspersoft.studio.field.label" value="ticket_id"/>
+			<property name="com.jaspersoft.studio.field.tree.path" value="ticket"/>
+		</field>
+		<field name="fecha" class="java.time.LocalDateTime">
+			<property name="com.jaspersoft.studio.field.name" value="creado_at"/>
+			<property name="com.jaspersoft.studio.field.label" value="fecha"/>
+			<property name="com.jaspersoft.studio.field.tree.path" value="ticket"/>
+		</field>
+		<field name="importe" class="java.math.BigDecimal">
+			<property name="com.jaspersoft.studio.field.name" value="total"/>
+			<property name="com.jaspersoft.studio.field.label" value="importe"/>
+			<property name="com.jaspersoft.studio.field.tree.path" value="ticket"/>
+		</field>
+		<field name="metodo_pago" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.name" value="metodo_pago"/>
+			<property name="com.jaspersoft.studio.field.label" value="metodo_pago"/>
+			<property name="com.jaspersoft.studio.field.tree.path" value="ticket"/>
+		</field>
+	</dataset>
+	<parameter name="CIERRE_ID" class="java.lang.Long"/>
+	<query language="sql"><![CDATA[SELECT 
+    id,
+    creado_at,
+    desde,
+    hasta,
+    num_comandas,
+    base_total,
+    iva_total,
+    total
+FROM cierre_turno
+WHERE id = $P{CIERRE_ID}
+]]></query>
+	<field name="id" class="java.lang.Long">
+		<property name="com.jaspersoft.studio.field.name" value="id"/>
+		<property name="com.jaspersoft.studio.field.label" value="id"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="cierre_turno"/>
+	</field>
+	<field name="creado_at" class="java.time.LocalDateTime">
+		<property name="com.jaspersoft.studio.field.name" value="creado_at"/>
+		<property name="com.jaspersoft.studio.field.label" value="creado_at"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="cierre_turno"/>
+	</field>
+	<field name="desde" class="java.time.LocalDateTime">
+		<property name="com.jaspersoft.studio.field.name" value="desde"/>
+		<property name="com.jaspersoft.studio.field.label" value="desde"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="cierre_turno"/>
+	</field>
+	<field name="hasta" class="java.time.LocalDateTime">
+		<property name="com.jaspersoft.studio.field.name" value="hasta"/>
+		<property name="com.jaspersoft.studio.field.label" value="hasta"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="cierre_turno"/>
+	</field>
+	<field name="num_comandas" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="num_comandas"/>
+		<property name="com.jaspersoft.studio.field.label" value="num_comandas"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="cierre_turno"/>
+	</field>
+	<field name="base_total" class="java.lang.Double">
+		<property name="com.jaspersoft.studio.field.name" value="base_total"/>
+		<property name="com.jaspersoft.studio.field.label" value="base_total"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="cierre_turno"/>
+	</field>
+	<field name="iva_total" class="java.lang.Double">
+		<property name="com.jaspersoft.studio.field.name" value="iva_total"/>
+		<property name="com.jaspersoft.studio.field.label" value="iva_total"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="cierre_turno"/>
+	</field>
+	<field name="total" class="java.lang.Double">
+		<property name="com.jaspersoft.studio.field.name" value="total"/>
+		<property name="com.jaspersoft.studio.field.label" value="total"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="cierre_turno"/>
+	</field>
+	<background splitType="Stretch"/>
+	<title height="267" splitType="Stretch">
+		<element kind="staticText" uuid="3c6853f6-c19e-49d9-bb18-2a8211e3f33a" x="0" y="20" width="240" height="20" hTextAlign="Center" vTextAlign="Middle">
+			<text><![CDATA[Nombre Empresa
+]]></text>
+		</element>
+		<element kind="staticText" uuid="0d54d1aa-749a-47f7-beb6-ad857401568c" x="0" y="50" width="240" height="46" hTextAlign="Center">
+			<text><![CDATA[Calle Ejemplo 123
+Ciudad (00000)
+C.I.F.: X00000000
+]]></text>
+		</element>
+		<element kind="staticText" uuid="dd970a84-9f6d-420e-aaa2-1caee6b3c256" x="0" y="0" width="240" height="20" hTextAlign="Center" vTextAlign="Middle">
+			<text><![CDATA[CIERRE DE TURNO]]></text>
+		</element>
+		<element kind="staticText" uuid="e9a7ed4a-a81f-48f5-90f6-30b2cdaad5b4" x="0" y="140" width="240" height="14">
+			<text><![CDATA[Fecha cierre:]]></text>
+		</element>
+		<element kind="staticText" uuid="536f00b0-efc6-4490-a62e-bcb34135cb11" x="0" y="126" width="240" height="14">
+			<text><![CDATA[Cierre ID:]]></text>
+		</element>
+		<element kind="textField" uuid="39f0cda9-435b-47e7-b43e-aac29667042f" x="0" y="140" width="240" height="14" hTextAlign="Right" vTextAlign="Middle">
+			<expression><![CDATA[ $F{creado_at}.format(java.time.format.DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm"))
+]]></expression>
+		</element>
+		<element kind="staticText" uuid="09fd7443-313a-43e9-9ca1-7d3f43cfca90" x="0" y="155" width="240" height="14">
+			<text><![CDATA[Desde:]]></text>
+		</element>
+		<element kind="textField" uuid="ca1d7756-f610-4d03-ab24-542e4154ba81" x="0" y="155" width="240" height="14" hTextAlign="Right" vTextAlign="Middle">
+			<expression><![CDATA[$F{desde}.format(java.time.format.DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm"))
+]]></expression>
+		</element>
+		<element kind="staticText" uuid="c8368faa-a0a8-475c-8b2a-d2cc9a8ec0f9" x="0" y="169" width="240" height="14">
+			<text><![CDATA[Hasta:]]></text>
+		</element>
+		<element kind="textField" uuid="dedb01d1-51c5-447a-b269-636e875a8495" x="0" y="169" width="240" height="14" hTextAlign="Right" vTextAlign="Middle">
+			<expression><![CDATA[$F{hasta}.format(java.time.format.DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm"))
+]]></expression>
+		</element>
+		<element kind="staticText" uuid="525b68e5-435c-47d6-90e5-4daaddb50966" x="0" y="197" width="240" height="14">
+			<text><![CDATA[Base imponible:]]></text>
+		</element>
+		<element kind="textField" uuid="4ae9d408-ee0f-410f-9096-6d71a9b7ca01" x="0" y="183" width="240" height="14" hTextAlign="Right" vTextAlign="Middle">
+			<expression><![CDATA[$F{num_comandas}]]></expression>
+		</element>
+		<element kind="staticText" uuid="2af18e9a-6909-4ec1-af92-5f52788eaa34" x="0" y="183" width="240" height="14">
+			<text><![CDATA[Comandas cerradas:]]></text>
+		</element>
+		<element kind="textField" uuid="ac19ca5b-6094-4017-b8d1-5535461459eb" x="0" y="197" width="240" height="14" hTextAlign="Right" vTextAlign="Middle">
+			<expression><![CDATA[String.format("%.2f €", $F{base_total})
+]]></expression>
+		</element>
+		<element kind="staticText" uuid="916ac8e3-b301-4e23-8062-a595c47e92ba" x="0" y="211" width="240" height="14">
+			<text><![CDATA[IVA:]]></text>
+		</element>
+		<element kind="textField" uuid="6bb5bd64-52a9-4528-aa19-c6267e2fe427" x="0" y="211" width="240" height="14" hTextAlign="Right" vTextAlign="Middle">
+			<expression><![CDATA[String.format("%.2f €", $F{iva_total})
+]]></expression>
+		</element>
+		<element kind="staticText" uuid="f1d584e4-a8a3-42a7-9274-da58149677ab" x="0" y="225" width="240" height="14">
+			<text><![CDATA[Total:]]></text>
+		</element>
+		<element kind="textField" uuid="7135bcb1-eac3-4f44-8b95-68f83da2c0e8" x="0" y="225" width="240" height="14" hTextAlign="Right" vTextAlign="Middle">
+			<expression><![CDATA[String.format("%.2f €", $F{total})
+]]></expression>
+		</element>
+		<element kind="textField" uuid="e6aec759-c3c8-4472-bca9-130fb534fdb7" x="0" y="126" width="240" height="14" hTextAlign="Right" vTextAlign="Middle">
+			<expression><![CDATA[$F{id}
+]]></expression>
+		</element>
+		<element kind="staticText" uuid="5c65f439-9a00-44cd-bcc7-0adadecb4ca7" x="0" y="97" width="240" height="30" hTextAlign="Center">
+			<text><![CDATA[-----------------------------------------
+]]></text>
+		</element>
+		<element kind="staticText" uuid="8f9c47d6-a239-4e09-b54b-a895567af48b" x="0" y="243" width="240" height="16" hTextAlign="Center">
+			<text><![CDATA[-----------------------------------------
+]]></text>
+		</element>
+		<property name="com.jaspersoft.studio.unit.height" value="px"/>
+	</title>
+	<detail>
+		<band height="157" splitType="Stretch">
+			<element kind="component" uuid="be3d5af2-f2aa-42dd-a686-d7118c21d2e6" x="0" y="0" width="240" height="99">
+				<component kind="table">
+					<datasetRun uuid="5f92d330-6e32-4a60-934b-c737c966c759" subDataset="ComandasCierre">
+						<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+						<parameter name="CIERRE_ID">
+							<expression><![CDATA[$P{CIERRE_ID}]]></expression>
+						</parameter>
+					</datasetRun>
+					<column kind="single" uuid="ec037981-a426-439a-bee1-d751eb07c587" width="40">
+						<tableHeader height="30" rowSpan="1" style="Table_TH"/>
+						<columnHeader height="20" rowSpan="1" style="Table_CH">
+							<element kind="staticText" uuid="d500561c-ac4e-4be2-bef7-abea4d6ab53c" x="0" y="0" width="40" height="20" bold="true" hTextAlign="Left" vTextAlign="Middle">
+								<text><![CDATA[Ticket]]></text>
+							</element>
+						</columnHeader>
+						<columnFooter height="30" rowSpan="1" style="Table_CH"/>
+						<detailCell height="20" style="Table_TD">
+							<element kind="textField" uuid="c9ad1338-e69e-4f49-88bf-292da4e0f001" x="0" y="0" width="40" height="20" hTextAlign="Left" vTextAlign="Middle">
+								<expression><![CDATA[$F{ticket_id}]]></expression>
+							</element>
+						</detailCell>
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column1"/>
+					</column>
+					<column kind="single" uuid="fa128238-2d97-4e58-ba54-a71938f2c5c3" width="90">
+						<tableHeader height="30" rowSpan="1" style="Table_TH"/>
+						<columnHeader height="20" rowSpan="1" style="Table_CH">
+							<element kind="staticText" uuid="66e74590-041a-4cc4-b5b9-954a8f109390" x="0" y="0" width="90" height="20" bold="true" hTextAlign="Center" vTextAlign="Middle">
+								<text><![CDATA[Fecha cobro]]></text>
+							</element>
+						</columnHeader>
+						<columnFooter height="30" rowSpan="1" style="Table_CH"/>
+						<detailCell height="20" style="Table_TD">
+							<element kind="textField" uuid="099516e6-a134-499f-889b-ebeadd982cac" x="0" y="0" width="90" height="20" hTextAlign="Center" vTextAlign="Middle">
+								<expression><![CDATA[$F{fecha}.format(
+    java.time.format.DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm")
+)
+
+]]></expression>
+							</element>
+						</detailCell>
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column2"/>
+					</column>
+					<column kind="single" uuid="8ab883de-5146-48db-b328-ac58c0228bbd" width="43">
+						<tableHeader height="30" rowSpan="1" style="Table_TH"/>
+						<columnHeader height="20" rowSpan="1" style="Table_CH">
+							<element kind="staticText" uuid="da1518f1-48b0-4565-b92b-82abb2c950e0" x="0" y="0" width="43" height="20" bold="true" hTextAlign="Center" vTextAlign="Middle">
+								<text><![CDATA[Importe]]></text>
+							</element>
+						</columnHeader>
+						<columnFooter height="30" rowSpan="1" style="Table_CH"/>
+						<detailCell height="20" style="Table_TD">
+							<element kind="textField" uuid="1d0e1d4c-3b1d-454f-9d36-45e9936e655b" x="0" y="0" width="43" height="20" hTextAlign="Center" vTextAlign="Middle">
+								<expression><![CDATA[String.format("%.2f €", $F{importe})
+]]></expression>
+							</element>
+						</detailCell>
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column3"/>
+					</column>
+					<column kind="single" uuid="b9519b36-a86d-4c69-8fbd-0ad8d4ffa41c" width="64">
+						<tableHeader height="30" rowSpan="1" style="Table_TH"/>
+						<columnHeader height="20" rowSpan="1" style="Table_CH">
+							<element kind="staticText" uuid="48f5ead5-279d-40fb-9145-b6d44f802585" x="0" y="0" width="64" height="20" bold="true" hTextAlign="Center" vTextAlign="Middle">
+								<text><![CDATA[Pago]]></text>
+							</element>
+						</columnHeader>
+						<columnFooter height="30" rowSpan="1" style="Table_CH"/>
+						<detailCell height="20" style="Table_TD">
+							<element kind="textField" uuid="6fe38a76-447a-43a8-be2a-8a9f9548cbbc" x="0" y="0" width="64" height="20" hTextAlign="Center" vTextAlign="Middle">
+								<expression><![CDATA[$F{metodo_pago}]]></expression>
+							</element>
+						</detailCell>
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column4"/>
+					</column>
+				</component>
+				<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.VerticalRowLayout"/>
+				<property name="com.jaspersoft.studio.table.style.table_header" value="Table_TH"/>
+				<property name="com.jaspersoft.studio.table.style.column_header" value="Table_CH"/>
+				<property name="com.jaspersoft.studio.table.style.detail" value="Table_TD"/>
+			</element>
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+		</band>
+	</detail>
+</jasperReport>

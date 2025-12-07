@@ -4,6 +4,15 @@
  */
 package com.hector.tpv.tpv.desktop.ui;
 
+import com.hector.tpv.tpv.desktop.api.ApiClient;
+import com.hector.tpv.tpv.desktop.model.UsuarioSesion;
+import java.awt.GridLayout;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JPasswordField;
+import javax.swing.JTextField;
+
 
 /**
  *
@@ -74,10 +83,50 @@ public class VentanaInicial extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnTpvActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTpvActionPerformed
-        TpvVentanaPrincipal tpv = new TpvVentanaPrincipal();
-    tpv.setExtendedState(java.awt.Frame.MAXIMIZED_BOTH);
-    tpv.setVisible(true);
-    dispose();
+        
+        JPanel panel = new JPanel(new GridLayout(2, 2));
+        JLabel lblUsuario = new JLabel("Usuario:");
+        JLabel lblPassword = new JLabel("Contraseña:");
+        JTextField txtUsuario = new JTextField();
+        JPasswordField txtPassword = new JPasswordField();
+
+        panel.add(lblUsuario);
+        panel.add(txtUsuario);
+        panel.add(lblPassword);
+        panel.add(txtPassword);
+
+        int result = JOptionPane.showConfirmDialog(
+                this,
+                panel,
+                "Login TPV",
+                JOptionPane.OK_CANCEL_OPTION,
+                JOptionPane.PLAIN_MESSAGE
+        );
+
+        if (result != JOptionPane.OK_OPTION) {
+            return;
+        }
+
+        String usuario = txtUsuario.getText().trim();
+        String password = new String(txtPassword.getPassword());
+
+        if (usuario.isEmpty() || password.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Usuario y contraseña obligatorios");
+            return;
+        }
+
+        try {
+            ApiClient api = ApiClient.fromProps();
+            UsuarioSesion sesion = api.login(usuario, password);
+
+            TpvVentanaPrincipal tpv = new TpvVentanaPrincipal(sesion);
+            tpv.setExtendedState(java.awt.Frame.MAXIMIZED_BOTH);
+            tpv.setVisible(true);
+            dispose();
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this, "Error al iniciar sesión: " + ex.getMessage());
+        }
+    
     }//GEN-LAST:event_btnTpvActionPerformed
 
     private void btnAlmacenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAlmacenActionPerformed
