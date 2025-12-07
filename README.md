@@ -8,7 +8,7 @@ Proyecto TFC — 2º DAM (2025)
 El proyecto consiste en el desarrollo de un sistema completo para la gestión de un bar o restaurante.  
 El sistema se compone de tres módulos principales:
 
-- **Aplicación de escritorio (TPV/Almacén):** gestión de mesas, comandas, productos, stock, escandallos y recetas.
+- **Aplicación de escritorio (TPV/Almacén):** gestión de mesas, comandas, productos y stock.
 - **Aplicación móvil (Android):** comandero para los camareros, permite enviar pedidos a cocina o barra en tiempo real.
 - **Backend (API REST con Spring Boot + MySQL):** centraliza la lógica del negocio y mantiene sincronizados los datos entre los distintos módulos.
 
