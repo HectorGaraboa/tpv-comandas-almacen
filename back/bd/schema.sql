@@ -28,7 +28,27 @@ CREATE TABLE `categoria_producto` (
   `id` bigint NOT NULL AUTO_INCREMENT,
   `nombre` varchar(100) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `cierre_turno`
+--
+
+DROP TABLE IF EXISTS `cierre_turno`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `cierre_turno` (
+  `id` bigint NOT NULL AUTO_INCREMENT,
+  `creado_at` datetime NOT NULL,
+  `desde` datetime NOT NULL,
+  `hasta` datetime NOT NULL,
+  `num_comandas` int NOT NULL,
+  `base_total` double NOT NULL,
+  `iva_total` double NOT NULL,
+  `total` double NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -53,7 +73,7 @@ CREATE TABLE `comanda` (
   KEY `idx_comanda_estado` (`estado`),
   CONSTRAINT `comanda_ibfk_1` FOREIGN KEY (`mesa_id`) REFERENCES `mesa` (`id`),
   CONSTRAINT `comanda_ibfk_2` FOREIGN KEY (`camarero_id`) REFERENCES `usuario` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=38 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=47 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -77,7 +97,7 @@ CREATE TABLE `comanda_linea` (
   KEY `idx_linea_producto` (`producto_id`),
   CONSTRAINT `comanda_linea_ibfk_1` FOREIGN KEY (`comanda_id`) REFERENCES `comanda` (`id`),
   CONSTRAINT `comanda_linea_ibfk_2` FOREIGN KEY (`producto_id`) REFERENCES `producto` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=53 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=72 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -96,7 +116,7 @@ CREATE TABLE `insumo` (
   `coste_unit_base` decimal(10,4) NOT NULL DEFAULT '0.0000',
   `stock_actual_base` decimal(12,4) NOT NULL DEFAULT '0.0000',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -135,7 +155,7 @@ CREATE TABLE `producto` (
   PRIMARY KEY (`id`),
   KEY `idx_producto_categoria` (`categoria_id`),
   CONSTRAINT `producto_ibfk_1` FOREIGN KEY (`categoria_id`) REFERENCES `categoria_producto` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -173,7 +193,7 @@ CREATE TABLE `receta` (
   UNIQUE KEY `producto_id` (`producto_id`),
   KEY `idx_receta_producto` (`producto_id`),
   CONSTRAINT `receta_ibfk_1` FOREIGN KEY (`producto_id`) REFERENCES `producto` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -233,7 +253,7 @@ CREATE TABLE `stock_movimiento` (
   CONSTRAINT `stock_movimiento_ibfk_1` FOREIGN KEY (`insumo_id`) REFERENCES `insumo` (`id`),
   CONSTRAINT `stock_movimiento_ibfk_2` FOREIGN KEY (`ref_comanda_id`) REFERENCES `comanda` (`id`),
   CONSTRAINT `stock_movimiento_ibfk_3` FOREIGN KEY (`ref_linea_id`) REFERENCES `comanda_linea` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=50 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=58 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -254,7 +274,7 @@ CREATE TABLE `ticket` (
   PRIMARY KEY (`id`),
   KEY `comanda_id` (`comanda_id`),
   CONSTRAINT `ticket_ibfk_1` FOREIGN KEY (`comanda_id`) REFERENCES `comanda` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -287,7 +307,7 @@ CREATE TABLE `usuario` (
   `pin_hash` varchar(255) NOT NULL,
   `activo` tinyint(1) NOT NULL DEFAULT '1',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -318,7 +338,7 @@ CREATE TABLE `zona` (
   `id` bigint NOT NULL AUTO_INCREMENT,
   `nombre` varchar(100) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -330,4 +350,4 @@ CREATE TABLE `zona` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2025-11-20 23:13:49
+-- Dump completed on 2025-12-07 16:17:09
