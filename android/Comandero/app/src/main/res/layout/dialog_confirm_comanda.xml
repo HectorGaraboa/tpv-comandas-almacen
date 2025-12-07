@@ -24,17 +24,20 @@
         android:gravity="end"
         android:paddingTop="12dp">
 
-        <Button
-            android:id="@+id/btnCancelarConfirm"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Cancelar"/>
-
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/btnEnviarConfirm"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Enviar"
-            android:layout_marginStart="12dp"/>
+            android:layout_marginStart="12dp"
+            style="@style/Widget.MaterialComponents.Button"
+            />
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnCancelarConfirm"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Cancelar"
+            style="@style/Widget.MaterialComponents.Button"
+            />
     </LinearLayout>
 </LinearLayout>

@@ -3,6 +3,12 @@
     <style name="Base.Theme.Comandero" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Customize your light theme here. -->
         <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+        <item name="colorPrimary">#1976D2</item>
+        <item name="colorPrimaryVariant">#1565C0</item>
+        <item name="colorOnPrimary">#FFFFFF</item>
+        <item name="colorSecondary">#03DAC5</item>
+
+
     </style>
 
     <style name="Theme.Comandero" parent="Base.Theme.Comandero" />

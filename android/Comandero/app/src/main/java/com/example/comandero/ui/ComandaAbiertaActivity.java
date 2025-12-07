@@ -26,7 +26,6 @@ public class ComandaAbiertaActivity extends AppCompatActivity {
     private TextView txtTitulo;
     private TextView txtTotal;
     private Button btnAtras;
-    private Button btnImpresion;
 
     private final Handler handler = new Handler();
     private final Runnable refresco = new Runnable() { @Override public void run() { cargar(); handler.postDelayed(this, 5000); } };
@@ -47,12 +46,11 @@ public class ComandaAbiertaActivity extends AppCompatActivity {
         txtTitulo = findViewById(R.id.txtTituloMesa);
         txtTotal = findViewById(R.id.txtTotalAbierto);
         btnAtras = findViewById(R.id.btnAtras);
-        btnImpresion = findViewById(R.id.btnImpresion);
+
 
         if (mesaCodigo != null) txtTitulo.setText(mesaCodigo); else txtTitulo.setText("");
 
         btnAtras.setOnClickListener(new View.OnClickListener() { @Override public void onClick(View v) { finish(); }});
-        btnImpresion.setOnClickListener(new View.OnClickListener() { @Override public void onClick(View v) { Toast.makeText(ComandaAbiertaActivity.this, "Sin funcionalidad", Toast.LENGTH_SHORT).show(); }});
 
         cargar();
     }

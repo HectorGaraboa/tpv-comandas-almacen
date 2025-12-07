@@ -7,20 +7,26 @@
     android:background="#F5F5F5"
     android:padding="24dp">
 
-    <Button
+
+
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/btnComandas"
         android:text="Comandas"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:backgroundTint="#616161"
         android:textColor="#FFFFFF"
-        android:layout_marginBottom="20dp"/>
+        android:layout_marginBottom="20dp"
+        style="@style/Widget.MaterialComponents.Button"
+        />
 
-    <Button
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/btnActualizar"
         android:text="Actualizar datos"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:backgroundTint="#9E9E9E"
-        android:textColor="#FFFFFF"/>
+        android:backgroundTint="#616161"
+        android:textColor="#FFFFFF"
+        style="@style/Widget.MaterialComponents.Button"
+        />
 </LinearLayout>

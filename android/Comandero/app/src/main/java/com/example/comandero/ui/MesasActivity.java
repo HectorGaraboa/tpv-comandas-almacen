@@ -24,13 +24,14 @@ public class MesasActivity extends AppCompatActivity {
 
     private RecyclerView recyclerView;
     private MesaAdapter adapter;
-
+    private long usuarioId;
+    private String usuarioNombre;
     private final Handler handler = new Handler();
     private final Runnable refresco = new Runnable() {
         @Override
         public void run() {
             cargarMesas();
-            handler.postDelayed(this, 5000); // cambia a 10000 si quieres 10 segundos
+            handler.postDelayed(this, 5000);
         }
     };
 
@@ -38,6 +39,11 @@ public class MesasActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mesas);
+        usuarioId = getIntent().getLongExtra("usuarioId", -1);
+        usuarioNombre = getIntent().getStringExtra("usuarioNombre");
+        if (usuarioNombre == null) {
+            usuarioNombre = "camarero";
+        }
 
         recyclerView = findViewById(R.id.recyclerViewMesas);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -72,8 +78,10 @@ public class MesasActivity extends AppCompatActivity {
                                 Intent i = new Intent(MesasActivity.this, PedidoActivity.class);
                                 i.putExtra("mesaId", m.getId());
                                 i.putExtra("mesaNombre", m.getCodigo());
-                                i.putExtra("camareroNombre", "nombre");
+                                i.putExtra("camareroId", usuarioId);
+                                i.putExtra("camareroNombre", usuarioNombre);
                                 startActivity(i);
+
                             }
                         });
                         recyclerView.setAdapter(adapter);

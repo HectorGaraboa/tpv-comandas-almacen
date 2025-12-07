@@ -29,6 +29,7 @@
         <activity android:name=".ui.MesaDetalleActivity" />
         <activity android:name=".ui.PedidoActivity"/>
         <activity android:name=".ui.ComandaAbiertaActivity" />
+        <activity android:name=".ui.LoginActivity" />
 
 
     </application>

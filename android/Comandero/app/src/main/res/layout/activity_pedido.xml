@@ -46,17 +46,21 @@
         android:padding="12dp"
         android:gravity="center_vertical|end">
 
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/btnOpciones"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Opciones"/>
-
-        <Button
+            android:text="Opciones"
+            style="@style/Widget.MaterialComponents.Button"
+            />
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/btnEnviar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Enviar comanda"
-            android:layout_marginStart="16dp"/>
+            android:layout_marginStart="16dp"
+            style="@style/Widget.MaterialComponents.Button"
+            />
+
     </LinearLayout>
 </LinearLayout>

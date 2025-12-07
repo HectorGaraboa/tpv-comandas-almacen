@@ -5,6 +5,8 @@ import com.example.comandero.model.Mesa;
 import com.example.comandero.model.MesaAbierta;
 import com.example.comandero.model.Producto;
 import com.example.comandero.model.dto.ComandaRequest;
+import com.example.comandero.model.dto.LoginRequest;
+import com.example.comandero.model.dto.UsuarioSesion;
 
 import java.util.List;
 
@@ -39,4 +41,8 @@ public interface ApiService {
 
     @POST
     Call<Object> rawPost(@Url String url, @Body RequestBody body);
+
+    @POST("/api/auth/login")
+    Call<UsuarioSesion> login(@Body LoginRequest body);
+
 }

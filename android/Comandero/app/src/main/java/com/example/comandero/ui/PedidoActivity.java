@@ -43,6 +43,9 @@ public class PedidoActivity extends AppCompatActivity {
     private long mesaId;
     private String mesaNombre;
     private String camareroNombre;
+    private long camareroId;
+
+
 
     private final List<Categoria> categorias = new ArrayList<>();
     private final List<Producto> productos = new ArrayList<>();
@@ -68,9 +71,13 @@ public class PedidoActivity extends AppCompatActivity {
         mesaId = i.getLongExtra("mesaId", -1);
         mesaNombre = i.getStringExtra("mesaNombre");
         camareroNombre = i.getStringExtra("camareroNombre");
+        camareroId = i.getLongExtra("camareroId", -1);
+
         if (mesaNombre == null) mesaNombre = "";
         if (camareroNombre == null) camareroNombre = "nombre";
+
         tvHeader.setText(mesaNombre + " | " + camareroNombre);
+
 
         rvCategorias.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
         rvProductos.setLayoutManager(new LinearLayoutManager(this));
@@ -223,8 +230,12 @@ public class PedidoActivity extends AppCompatActivity {
 
         final ComandaRequest req = new ComandaRequest();
         req.setMesaId(mesaId);
-        req.setCamareroId(1L);
+
+        long idParaUsar = camareroId > 0 ? camareroId : 1L;
+        req.setCamareroId(idParaUsar);
+
         req.setLineas(lineas);
+
 
         api.crearComanda(req).enqueue(new Callback<ComandaRequest.ComandaRespuesta>() {
             @Override
