@@ -66,32 +66,6 @@ tpv-comandas-almacen/
 
 ---
 
-## Base de datos
-
-### 1. Requisitos previos
-- **MySQL Server 8.0** o superior  
-- **MySQL Workbench** (opcional, para visualizar el diagrama)
-
-### 2. Creación de la base de datos
-Ejecutar desde consola o Workbench:
-
-```bash
-mysql -u root -p < backend/db/schema.sql
-mysql -u root -p < backend/db/seed.sql
-```
-
-Esto creará toda la estructura y cargará los datos de ejemplo.
-
-### 3. Verificación
-Comprobar que las tablas se han creado correctamente:
-
-```sql
-USE tpv_tfc;
-SHOW TABLES;
-SELECT * FROM producto;
-SELECT * FROM insumo;
-```
----
 
 ##  Ejecución del proyecto
 
@@ -160,7 +134,7 @@ mvn clean compile exec:java -Dexec.mainClass="com.hector.tpv.tpv.desktop.Main"
 - Móvil o emulador
 
 ### Configurar API
-En `ApiService`:
+En `Actualizar Datos`:
 ```
 BASE_URL = "http://192.168.X.XX:8080/";
 ```
@@ -238,6 +212,5 @@ docker compose up -d --build
 | **Backend (tpv-api)** | 🟢 Operativo | API REST funcional |
 | **TPV de Escritorio** | 🟢 Operativo | Mesas, productos, envío, cobro |
 | **Android (Comandero)** | 🟢 Operativo | Flujo completo |
-| **Modo Almacén** | ⚪ Pendiente | Implementación planificada para siguientes fases |
 
 ---
