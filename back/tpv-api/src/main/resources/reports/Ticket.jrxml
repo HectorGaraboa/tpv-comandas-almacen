@@ -43,7 +43,7 @@ ORDER BY cl.id
 		<property name="com.jaspersoft.studio.field.label" value="ticket_id"/>
 		<property name="com.jaspersoft.studio.field.tree.path" value="ticket"/>
 	</field>
-	<field name="fecha" class="java.util.Date">
+	<field name="fecha" class="java.time.LocalDateTime">
 		<property name="com.jaspersoft.studio.field.name" value="creado_at"/>
 		<property name="com.jaspersoft.studio.field.label" value="fecha"/>
 		<property name="com.jaspersoft.studio.field.tree.path" value="ticket"/>
@@ -109,7 +109,7 @@ Ciudad (00000)
 C.I.F.: X00000000
 ]]></text>
 		</element>
-		<element kind="staticText" uuid="8970cbad-cb7e-436e-adaf-5f047ac492b7" x="0" y="97" width="175" height="30" hTextAlign="Center">
+		<element kind="staticText" uuid="8970cbad-cb7e-436e-adaf-5f047ac492b7" x="-2" y="97" width="175" height="30" hTextAlign="Center">
 			<text><![CDATA[-----------------------------------------
 ]]></text>
 		</element>
@@ -135,7 +135,7 @@ C.I.F.: X00000000
 			<text><![CDATA[Mesa:]]></text>
 		</element>
 		<element kind="textField" uuid="46d8f1e0-92d6-4c77-a768-d7eb29fdb271" x="40" y="28" width="100" height="14">
-			<expression><![CDATA[new java.text.SimpleDateFormat("dd/MM/yyyy").format($F{fecha})
+			<expression><![CDATA[$F{fecha}.toLocalDate().format(java.time.format.DateTimeFormatter.ofPattern("dd/MM/yyyy"))
 
 ]]></expression>
 		</element>
@@ -143,8 +143,7 @@ C.I.F.: X00000000
 			<text><![CDATA[Hora:]]></text>
 		</element>
 		<element kind="textField" uuid="40cb3f6c-869e-406a-8322-b14a1b1375f1" x="40" y="43" width="100" height="14">
-			<expression><![CDATA[new java.text.SimpleDateFormat("HH:mm").format($F{fecha})
-
+			<expression><![CDATA[$F{fecha}.toLocalTime().format(java.time.format.DateTimeFormatter.ofPattern("HH:mm"))
 ]]></expression>
 		</element>
 		<element kind="staticText" uuid="b6d733e8-e084-4fca-9bc4-1d5edcbc930f" x="0" y="57" width="40" height="14">
@@ -162,10 +161,10 @@ C.I.F.: X00000000
 		<element kind="staticText" uuid="8afc5e2c-79e0-4e64-a3a0-59fb85910deb" x="30" y="0" width="75" height="20" bold="true">
 			<text><![CDATA[Descripción]]></text>
 		</element>
-		<element kind="staticText" uuid="72587e76-b7a7-4ef1-ae07-1d04137e0b49" x="106" y="0" width="34" height="20" bold="true">
+		<element kind="staticText" uuid="72587e76-b7a7-4ef1-ae07-1d04137e0b49" x="105" y="0" width="35" height="20" bold="true">
 			<text><![CDATA[Precio]]></text>
 		</element>
-		<element kind="staticText" uuid="c14fb6c3-86ae-4188-afb0-947dd40aa22f" x="140" y="-1" width="30" height="22" bold="true">
+		<element kind="staticText" uuid="c14fb6c3-86ae-4188-afb0-947dd40aa22f" x="140" y="0" width="30" height="20" bold="true">
 			<text><![CDATA[Total]]></text>
 		</element>
 	</columnHeader>
